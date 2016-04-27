@@ -13,6 +13,10 @@
 		<li><p> <a href="{{route('assignment1')}}">Basic vue assignment</a></p></li>
 	</ul>
 	<div class="header">Day 2</div>
+	<ul>
+		<li><p> <a href="{{route('task4')}}">Upvote/Downvote</a> </p></li>
+		<li><p> <a href="{{route('task5')}}">Calculator</a> </p></li>
+	</ul>
 </div>
 </body>
 </html>

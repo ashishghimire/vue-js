@@ -30,3 +30,11 @@ Route::get('task3', ['as' => 'task3', function() {
 Route::get('assignment1', ['as' => 'assignment1', function() {
 	return view('assignment1');
 }]);
+
+Route::get('task4', ['as' => 'task4', function() {
+	return view('task4');
+}]);
+
+Route::get('task5', ['as' => 'task5', function() {
+	return view('task5');
+}]);
