@@ -67,7 +67,7 @@ var votes = new Vue({
 });
 
 
-function getDefaultData() {
+function getCalculatorDefaults() {
     return {
         screenVal: 0,
         query: '',
@@ -81,7 +81,7 @@ function getDefaultData() {
 var calculator = new Vue({
     el: '#calculator',
     data: function () {
-        return getDefaultData();
+        return getCalculatorDefaults();
     },
     methods: {
         operate: function (operator) {
@@ -98,20 +98,20 @@ var calculator = new Vue({
             this.currentOperator = operator;
 
         },
-        calculate: function (operator = null) {
+        calculate: function (operator) {
             if (this.currentOperator) {
                 switch (this.currentOperator) {
                     case '+' :
-                        this.result = parseInt(this.currentVal) + parseInt(this.screenVal);
+                        this.result = parseFloat(this.currentVal) + parseFloat(this.screenVal);
                         break;
                     case '-' :
-                        this.result = parseInt(this.currentVal) - parseInt(this.screenVal);
+                        this.result = parseFloat(this.currentVal) - parseFloat(this.screenVal);
                         break;
                     case '*' :
-                        this.result = parseInt(this.currentVal) * parseInt(this.screenVal);
+                        this.result = parseFloat(this.currentVal) * parseFloat(this.screenVal);
                         break;
                     case '/' :
-                        this.result = parseInt(this.screenVal) !== 0 ? parseInt(this.currentVal) / parseInt(this.screenVal) : 'ERROR!! Division by zero';
+                        this.result = parseFloat(this.screenVal) !== 0 ? parseFloat(this.currentVal) / parseFloat(this.screenVal) : 'ERROR!! Division by zero';
                         break;
                 }
 
@@ -132,7 +132,100 @@ var calculator = new Vue({
             this.currentOperator = null;
         },
         clear: function () {
-            this.$data = getDefaultData();
+            this.$data = getCalculatorDefaults();
+        }
+    }
+});
+
+var computedProperty = new Vue({
+    el: '#computed-properties',
+    data: {
+        input: 1
+    },
+    computed: {
+        //computed getter
+        computedValue: function () {
+            return this.input + 1;
+        }
+    }
+});
+
+var binaryCalc = new Vue({
+    el: '#binary-calc',
+    data: {
+        a: 1,
+        b: 2,
+        operator: " ",
+    },
+    computed: {
+        calculate: function () {
+            switch (this.operator) {
+                case "+":
+                    return this.a + this.b
+                    break;
+                case "-":
+                    return this.a - this.b
+                    break;
+                case "*":
+                    return this.a * this.b
+                    break;
+                case "/":
+                    return this.a / this.b
+                    break;
+            }
+        }
+    },
+});
+
+var filterArray = new Vue({
+    el: '#filter-array',
+    data: {
+        opinions: [
+            {person: 'Ashish', opinion: 'honesty is the best policy', upvotes: 6},
+            {person: 'Brad', opinion: 'yolo', upvotes: 8},
+            {person: 'John', opinion: 'punk is not dead', upvotes: 7}
+        ]
+    },
+    computed: {
+        popularOpinions: function () {
+            return this.opinions.filter(function (item) {
+                return item.upvotes > 5;
+            }).sort(function (a, b) {
+                return b.upvotes - a.upvotes;
+            });
+        }
+    },
+});
+
+function getCandidatesData() {
+    return {
+        candidates: [
+            {name: 'Ashish', votes: 0},
+            {name: 'Diken', votes: 0},
+            {name: 'Ayush', votes: 0}
+        ]
+    };
+}
+var election = new Vue({
+    el: '#mayor',
+    data: function () {
+        return getCandidatesData();
+    },
+    computed: {
+        mayors: function () {
+            var votes = this.candidates.map(function (obj) {
+                return obj.votes;
+            });
+            var maxVotes = Math.max(...votes);
+            var mayors = this.candidates.filter(function (obj) {
+                return obj.votes == maxVotes;
+            });
+            return mayors;
+        }
+    },
+    methods: {
+        clearVotes: function () {
+            this.$data = getCandidatesData();
         }
     }
 });
