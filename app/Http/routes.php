@@ -76,3 +76,21 @@ Route::get('assignment2', [
         return view('assignment2');
     }
 ]);
+
+Route::get('task9', [
+    'as' => 'task9', function () {
+        return view('task9');
+    }
+]);
+
+Route::get('task10', [
+    'as' => 'task10', function () {
+        return view('task10');
+    }
+]);
+
+Route::get('task11', [
+    'as' => 'task11', function () {
+        return view('task11');
+    }
+]);

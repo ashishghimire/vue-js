@@ -24,6 +24,12 @@
         <li><p><a href="{{route('task8')}}">Filter array using computed properties</a></p></li>
         <li><p><a href="{{route('assignment2')}}">Election using Computed properties (Assignment 2)</a></p></li>
     </ul>
+    <div class="header">Day 4</div>
+    <ul>
+        <li><p><a href="{{route('task9')}}">Navigation Menu</a></p></li>
+        <li><p><a href="{{route('task10')}}">Inline Editor</a></p></li>
+        <li><p><a href="{{route('task11')}}">Restaurant menu</a></p></li>
+    </ul>
 </div>
 </body>
 </html>
