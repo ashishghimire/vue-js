@@ -161,16 +161,16 @@ var binaryCalc = new Vue({
         calculate: function () {
             switch (this.operator) {
                 case "+":
-                    return this.a + this.b
+                    return this.a + this.b;
                     break;
                 case "-":
-                    return this.a - this.b
+                    return this.a - this.b;
                     break;
                 case "*":
-                    return this.a * this.b
+                    return this.a * this.b;
                     break;
                 case "/":
-                    return this.a / this.b
+                    return this.a / this.b;
                     break;
             }
         }
@@ -216,7 +216,9 @@ var election = new Vue({
             var votes = this.candidates.map(function (obj) {
                 return obj.votes;
             });
-            var maxVotes = Math.max(...votes);
+            var maxVotes = Math.max(...votes
+            )
+            ;
             var mayors = this.candidates.filter(function (obj) {
                 return obj.votes == maxVotes;
             });
@@ -226,6 +228,83 @@ var election = new Vue({
     methods: {
         clearVotes: function () {
             this.$data = getCandidatesData();
+        }
+    }
+});
+
+var navigation = new Vue({
+    el: '#navigation',
+    data: {
+        active: 'Home'
+    },
+    methods: {
+        makeActive: function (page) {
+            this.active = page;
+        }
+    }
+});
+
+var editor = new Vue({
+    el: '#editor',
+    data: {
+        message: 'Edit me',
+        tooltip: 'hide'
+    },
+    methods: {
+        editMsg: function (e) {
+            this.tooltip = this.toggleTooltip(e);
+        },
+        hideTooltip: function () {
+            this.tooltip = 'hide';
+        },
+        toggleTooltip: function (e) {
+            if (this.tooltip == 'hide') {
+                return 'show';
+            } else {
+                return 'hide';
+            }
+        }
+    }
+});
+
+var restaurant = new Vue({
+    el: '#restaurant',
+    data: {
+        items: [
+            {name: 'MoMo', price: 150, ordered: false, qty: 0},
+            {name: 'Chowmein', price: 200, ordered: false, qty: 0},
+            {name: 'Burger', price: 250, ordered: false, qty: 0},
+            {name: 'Pizza', price: 250, ordered: false, qty: 0}
+        ]
+    },
+    methods: {
+        order: function (index) {
+            this.items[index].ordered = true;
+            this.items[index].qty++;
+        },
+        removeOne: function (index) {
+            this.items[index].qty--;
+            if (this.items[index].qty < 1) {
+                this.items[index].ordered = false;
+            }
+        },
+        cancel: function (index) {
+            this.items[index].ordered = false;
+            this.items[index].qty = 0;
+        }
+    },
+    computed: {
+        totalPrice: function () {
+            var totalPrice = 0;
+            this.items.forEach(function (item) {
+                totalPrice += (item.price * item.qty);
+            });
+            return totalPrice;
+        },
+        orderedItems: function () {
+            return this.items.filter(function (item) {
+                return item.ordered == true;
+            });
         }
     }
 });
