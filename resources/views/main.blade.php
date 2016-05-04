@@ -30,6 +30,13 @@
         <li><p><a href="{{route('task10')}}">Inline Editor</a></p></li>
         <li><p><a href="{{route('task11')}}">Restaurant menu</a></p></li>
     </ul>
+    <div class="header">Day 5</div>
+    <ul>
+        <li><p><a href="{{route('task12')}}">Filter</a></p></li>
+        <li><p><a href="{{route('task13')}}">Components</a></p></li>
+        <li><p><a href="{{route('task14')}}">Slider</a></p></li>
+
+    </ul>
 </div>
 </body>
 </html>
