@@ -308,3 +308,129 @@ var restaurant = new Vue({
         }
     }
 });
+
+var books = [
+    {
+        author: 'Sydney Sheldon',
+        title: 'Are you afraid of the dark'
+    },
+    {
+        author: 'Steven Gould',
+        title: 'Jumper'
+    },
+    {
+        author: 'R.L. Stine',
+        title: 'Goosebumps'
+    }
+];
+
+Vue.filter('searchFor', function (value, queryString) {
+    var result = [];
+
+    if (!queryString) {
+        return value;
+    }
+
+    queryString = queryString.trim().toLowerCase();
+
+    result = value.filter(function (item) {
+        if (item.author.toLowerCase().indexOf(queryString) !== -1 || item.title.toLowerCase().indexOf(queryString) !== -1) {
+            return item;
+        }
+    });
+
+    return result;
+});
+
+var filter = new Vue({
+    el: '#filter',
+    data: {
+        books: books,
+        searchString: ''
+    }
+});
+
+var MyComponent = Vue.extend({
+    template: 'A custom component!',
+});
+
+
+Vue.component('my-component', MyComponent);
+
+Vue.component('child', {
+    // declare the props
+    props: ['msg', 'myMsg', 'parentMsg'],
+    // the prop can be used inside templates, and will also
+    // be set as `this.msg`
+    template: '<span>{{ msg }}</span> <br> <span>{{ myMsg }}</span> <br> <span>{{ parentMsg }}</span>'
+});
+
+var componentInstance = new Vue({
+    el: '#component'
+});
+
+
+var slider = new Vue({
+    el: '#slide',
+    data: {
+        total: '',
+        slide1: 0,
+        slide2: 0,
+        percentage: 50,
+        enteredTotal: false
+    },
+    computed: {
+        enteredTotal: function () {
+            return !!(this.total && !isNaN(this.total));
+        },
+        percentage: {
+            set: function (val) {
+                this.slide1 = Math.round(((100 - val) * this.total) / 100);
+                this.slide2 = Math.round((val * this.total) / 100);
+                if (val == 50 && this.total % 2 !== 0) {
+
+                    this.slide1--;
+
+                }
+            }
+        }
+    },
+    watch: {
+        enteredTotal: function (val, oldVal) {
+            this.percentage = 50;
+            var self = this;
+            if (val) {
+                $("#slider").slider({
+                    value: 50,
+                    slide: function (event, ui) {
+                        self.percentage = ui.value;
+                    }
+                });
+            } else {
+                $("#slider").slider('destroy');
+            }
+        },
+        total: function (val, oldVal) {
+            if (val % 2 == 0) {
+                this.slide1 = val / 2;
+                this.slide2 = val / 2;
+            }
+            else {
+                this.slide1 = parseInt(val / 2);
+                this.slide2 = parseInt(val / 2) + 1;
+            }
+            $("#slider").slider("value", 50);
+        }
+    },
+    methods: {
+        bindValue: function () {
+            if (parseFloat(this.slide1) + parseFloat(this.slide2) == this.total) {
+                var percent = (100 / this.total) * this.slide2;
+                $("#slider").slider("value", percent);
+            }
+        }
+    }
+});
+
+
+
